@@ -1,5 +1,5 @@
 #coding=utf-8
-import os
+import os,subprocess
 import unittest
 from appium	import webdriver
 from time import sleep
@@ -62,6 +62,8 @@ class AppTestCase(unittest.TestCase):
 		self.driver.find_element_by_id('bf.cloud.bfclouddemowithui:id/definitionID').send_keys('10')
 
 		self.driver.find_element_by_xpath('//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Button[1]').click()
+		subprocess.call(["ls -l"],shell=True)
+
 		sleep(1)
 
 
