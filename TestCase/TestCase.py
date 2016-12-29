@@ -1,6 +1,7 @@
 #coding=utf-8
 import os,subprocess,unittest,time
 from Base.index import AppSet
+from appium.webdriver.connectiontype import ConnectionType
 
 # Returns abs path relative to this file and not cwd
 PATH = lambda p: os.path.abspath(
@@ -22,11 +23,11 @@ resume = 'bf.cloud.bfclouddemowithui:id/resume'
 definition = 'bf.cloud.bfclouddemowithui:id/definition'
 live_confirm = '//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Button[1]'
 
-Canvas = 'servicetype=1&uid=34803807&fid=B2A803B8BECC47E0EB77DC487A5AB1B3' # Canvas播放地址
+Canvas = 'servicetype=1&uid=34803807&fid=B2A803B8BECC47E0EB77DC487A5AB1B3' # Canvas播放地址  4K_VR
 qstp_vod = 'qstp://qkvp/pGp/bmxleqg/qey:XDXZ.s?jp=GGJ&jd=XADBAQJG0E0AZAQ11JWGDFZCTMAXFGTDAWWWJD0E&vd=DQGFTQJJDMWZGGWZEAJ1XBWAAATXEDTMTBETQMXW&lh=X1JQBZM&fz=DQQZ0E&pi=DT&pr=WM0XX&pps=A&ppk=A&pyp=X1JQBWE&blzd=JXA1&vk=A&pah=MCJMGEBWEJQFAGADD0QW0Z0GJFT1TAWZ&ped=pov'
 qstp_live = 'qstp://qkvp/five/bmxleqg/qey:XDZD.s?jp=GAAAQ&jd=QTTEZQ01ZZDFMZAQ0ZJQMF1BMGQEWF1ZFFMTZ1GT&vd=QTTEZQ01ZZDFMZAQ0ZJQMF1BMGQEWF1ZFFMTZ1GT&lh=WFFFFFFFFFFFFFFF&pr=JEXAAA&pk=DCMTQFJTDZTAMA1MBMTWCZFJEJJ1BGCQ&ds=A&vpz=qkvpq/five/bmxleqg/qey&vpp=XDZD&pah=D1DGJQBCMJFQWX0MCQJ0CMGJ00TZMG01&ped=bfv'
 
-looptime = 5
+looptime = 5   # 循环次数
 
 live360p = '10'
 live480p = "20"
@@ -40,8 +41,26 @@ class AppTestCase(AppSet):
 		'''获取手机的分辨率'''
 		width=self.driver.get_window_size()['width']
 		height=self.driver.get_window_size()['height']
-		print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 		print u'手机的分辨率为:',width,'*',height
+
+		print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+		delay_time = time.strftime('%H-%M-%S',time.localtime(time.time()))
+
+		self.driver.get_screenshot_as_file(delay_time)
+
+		self.driver.set_network_connection(ConnectionType.DATA_ONLY)
+		print self.driver.network_connection
+		'''Sets the network connection type. Android only.
+		    Possible values:
+		        Value (Alias)      | Data | Wifi | Airplane Mode
+		        -------------------------------------------------
+		        0 (None)           | 0    | 0    | 0
+		        1 (Airplane Mode)  | 0    | 0    | 1
+		        2 (Wifi only)      | 0    | 1    | 0
+		        4 (Data only)      | 1    | 0    | 0
+		        6 (All network on) | 1    | 1    | 0
+		    '''
+
 		subprocess.call(["ls -l"],shell=True)
 
 	def test_002(self):
@@ -81,8 +100,8 @@ class AppTestCase(AppSet):
 		time.sleep(2)
 
 if __name__=='__main__':
-	unittest.main(verbosity=2)
+	# unittest.main(verbosity=2)
 
-	# suite=unittest.TestSuite()
-	# suite.addTest(AppTestCase('test_002'))
-	# unittest.TextTestRunner(verbosity=2).run(suite)
+	suite=unittest.TestSuite()
+	suite.addTest(AppTestCase('test_001'))
+	unittest.TextTestRunner(verbosity=2).run(suite)
