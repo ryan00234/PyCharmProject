@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<catalog>
+       <maxid>4</maxid>
+       <login username="pytest" passwd='123456'>
+           <vod>bf.cloud.bfclouddemowithui:id/vod</vod>
+
+           <live>bf.cloud.bfclouddemowithui:id/live</live>
+
+           <play_url>bf.cloud.bfclouddemowithui:id/play_url</play_url>
+
+           <start>bf.cloud.bfclouddemowithui:id/start</start>
+
+           <full_screen>bf.cloud.bfclouddemowithui:id/full_screen</full_screen>
+
+           <change_video>bbf.cloud.bfclouddemowithui:id/change_video</change_video>
+
+           <definitionID>bf.cloud.bfclouddemowithui:id/definitionID</definitionID>
+
+           <getdefinitions>bf.cloud.bfclouddemowithui:id/getdefinitions</getdefinitions>
+
+           <change_decode_mode>bf.cloud.bfclouddemowithui:id/change_decode_mode</change_decode_mode>
+
+           <change_live_delay_mode>bf.cloud.bfclouddemowithui:id/change_live_delay_mode</change_live_delay_mode>
+
+           <stop>bf.cloud.bfclouddemowithui:id/stop</stop>
+
+           <resume>bf.cloud.bfclouddemowithui:id/resume</resume>
+
+           <definition>bf.cloud.bfclouddemowithui:id/definition</definition>
+
+           <live_confirm>//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Button[1]</live_confirm>
+
+    </login>
+    <item id="2">
+    </item>
+</catalog>
+

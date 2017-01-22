@@ -1,39 +1,14 @@
 #coding=utf-8
-import os,subprocess,unittest,time
-from Base.index import AppSet
+import time
+import subprocess
+from Base.index import *
 from appium.webdriver.connectiontype import ConnectionType
+
 
 # Returns abs path relative to this file and not cwd
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
-
-vod = 'bf.cloud.bfclouddemowithui:id/vod' # 点播按钮ID
-live = 'bf.cloud.bfclouddemowithui:id/live'
-play_url = 'bf.cloud.bfclouddemowithui:id/play_url' # 播放地址输入框ID
-start = 'bf.cloud.bfclouddemowithui:id/start'
-full_screen = 'bf.cloud.bfclouddemowithui:id/full_screen'
-change_video = 'bf.cloud.bfclouddemowithui:id/change_video'
-definitionID = 'bf.cloud.bfclouddemowithui:id/definitionID'
-getdefinitions = 'bf.cloud.bfclouddemowithui:id/getdefinitions'
-change_decode = 'bf.cloud.bfclouddemowithui:id/change_decode_mode'
-live_delay = 'bf.cloud.bfclouddemowithui:id/change_live_delay_mode'
-stop = 'bf.cloud.bfclouddemowithui:id/stop'
-resume = 'bf.cloud.bfclouddemowithui:id/resume'
-definition = 'bf.cloud.bfclouddemowithui:id/definition'
-live_confirm = '//android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Button[1]'
-
-H265 = 'servicetype=2&uid=5263465&fid=12345678901234567890123456789012345ABCDE'
-Canvas = 'servicetype=1&uid=34803807&fid=B2A803B8BECC47E0EB77DC487A5AB1B3' # Canvas播放地址  4K_VR
-qstp_vod = 'qstp://qkvp/pGp/bmxleqg/qey:XDXZ.s?jp=GGJ&jd=XADBAQJG0E0AZAQ11JWGDFZCTMAXFGTDAWWWJD0E&vd=DQGFTQJJDMWZGGWZEAJ1XBWAAATXEDTMTBETQMXW&lh=X1JQBZM&fz=DQQZ0E&pi=DT&pr=WM0XX&pps=A&ppk=A&pyp=X1JQBWE&blzd=JXA1&vk=A&pah=MCJMGEBWEJQFAGADD0QW0Z0GJFT1TAWZ&ped=pov'
-qstp_live = 'qstp://qkvp/five/bmxleqg/qey:XDZD.s?jp=GAAAQ&jd=QTTEZQ01ZZDFMZAQ0ZJQMF1BMGQEWF1ZFFMTZ1GT&vd=QTTEZQ01ZZDFMZAQ0ZJQMF1BMGQEWF1ZFFMTZ1GT&lh=WFFFFFFFFFFFFFFF&pr=JEXAAA&pk=DCMTQFJTDZTAMA1MBMTWCZFJEJJ1BGCQ&ds=A&vpz=qkvpq/five/bmxleqg/qey&vpp=XDZD&pah=D1DGJQBCMJFQWX0MCQJ0CMGJ00TZMG01&ped=bfv'
-
-looptime = 5   # 循环次数
-
-live360p = '10'
-live480p = "20"
-live720p = '30'
-live1080p = '40'
 
 
 class AppTestCase(AppSet):
@@ -66,11 +41,11 @@ class AppTestCase(AppSet):
 
 	def test_002(self):
 		'''点播seek'''
-		self.driver.find_element_by_id(vod).click()
+		self.driver.find_element_by_id(Button.vod).click()
 
-		self.driver.find_element_by_id(play_url).send_keys(Canvas)
+		self.driver.find_element_by_id(Button.play_url).send_keys(url.Canvas)
 
-		self.driver.find_element_by_id(start).click()
+		self.driver.find_element_by_id(Button.start).click()
 
 		width=self.driver.get_window_size()['width']
 		height=self.driver.get_window_size()['height']
@@ -82,27 +57,31 @@ class AppTestCase(AppSet):
 	def test_003(self):
 		'''点播切片'''
 		time.sleep(1)
-		self.driver.find_element_by_id(vod).click()
+		self.driver.find_element_by_id(Button.vod).click()
+		self.driver.find_element_by_id(Button.start).click()
 
-		for i in range(looptime):
-			self.driver.find_element_by_id(change_video).click()
+		p = subprocess.Popen(command.cmdnclog, stdout=subprocess.PIPE)
+
+		for row in iter(p.stdout.readline, b''):
+			self.driver.find_element_by_id(Button.change_video).click()
 			time.sleep(3)
+			print row.rstrip()  # process here
 
 	def	test_004(self):
 		'''直播清晰度'''
-		self.driver.find_element_by_id(live).click()
+		self.driver.find_element_by_id(Button.live).click()
 
-		self.driver.find_element_by_id(start).click()
+		self.driver.find_element_by_id(Button.start).click()
 		time.sleep(1)
 
-		self.driver.find_element_by_id(definitionID).send_keys(live360p)
+		self.driver.find_element_by_id(Button.definitionID).send_keys(defini.live360p)
 
-		self.driver.find_element_by_xpath(live_confirm).click()
+		self.driver.find_element_by_xpath(Button.live_confirm).click()
 		time.sleep(2)
 
 if __name__=='__main__':
 	# unittest.main(verbosity=2)
 
 	suite=unittest.TestSuite()
-	suite.addTest(AppTestCase('test_001'))
+	suite.addTest(AppTestCase('test_002'))
 	unittest.TextTestRunner(verbosity=2).run(suite)
