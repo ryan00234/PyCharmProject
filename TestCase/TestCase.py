@@ -20,7 +20,7 @@ class AppTestCase(AppSet):
 		print u'手机的分辨率为:',width,'*',height
 
 		print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-		delay_time = time.strftime('%H-%M-%S',time.localtime(time.time()))
+		delay_time = time.strftime('%H-%M-%S',time.localtime(time.time())) + '.png'
 
 		self.driver.get_screenshot_as_file(delay_time)
 
@@ -39,6 +39,7 @@ class AppTestCase(AppSet):
 
 		subprocess.call(["ls -l"],shell=True)
 
+
 	def test_002(self):
 		'''点播seek'''
 		self.driver.find_element_by_id(Button.vod).click()
@@ -54,6 +55,7 @@ class AppTestCase(AppSet):
 		self.driver.swipe(width/3,height/4,width*2/3,height/4,1000)
 		time.sleep(10)
 
+
 	def test_003(self):
 		'''点播切片'''
 		time.sleep(1)
@@ -66,6 +68,7 @@ class AppTestCase(AppSet):
 			self.driver.find_element_by_id(Button.change_video).click()
 			time.sleep(3)
 			print row.rstrip()  # process here
+
 
 	def	test_004(self):
 		'''直播清晰度'''
@@ -83,5 +86,5 @@ if __name__=='__main__':
 	# unittest.main(verbosity=2)
 
 	suite=unittest.TestSuite()
-	suite.addTest(AppTestCase('test_002'))
+	suite.addTest(AppTestCase('test_003'))
 	unittest.TextTestRunner(verbosity=2).run(suite)
